@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  <kcfgfile name=""/>
+  <group name="Pocket account">
+    <entry name="pocketConsumerKey" type="String">
+      <default>34847-7ab7e8a6519b985d91175a9d</default>
+    </entry>
+    <entry name="pocketAccessToken" type="String">
+      <default></default>
+    </entry>
+    <entry name="pocketUsername" type="String">
+      <default></default>
+    </entry>
+  </group>
+  <group name="Ttrss">
+    <entry name="ttrssUrl" type="String">
+      <default></default>
+    </entry>
+    <entry name="ttrssUser" type="String">
+      <default></default>
+    </entry>
+    <entry name="ttrssPw" type="Password">
+      <default></default>
+    </entry>    
+  </group>
+  <group name="Style">
+    <entry name="shadows" type="Boolean">
+      <default>true</default>
+    </entry>
+    <entry name="articleViewColors" type="String">
+      <label>Article view colors</label>
+      <default>theme</default>
+    </entry>
+    <entry name="articleViewHeadingFont" type="String">
+      <label>The font used to display the contents of books.</label>
+      <default></default>
+    </entry>
+    <entry name="articleViewBodyFont" type="String">
+      <default></default>
+    </entry>    
+  </group>
+
+</kcfg>
