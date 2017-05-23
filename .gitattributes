@@ -1,0 +1,6 @@
+.gitattributes export-ignore
+.gitignore export-ignore
+*.qmlproject export-ignore
+*.qmlproject.user export-ignore
+*.kdev4 export-ignore
+*.directory export-ignore
