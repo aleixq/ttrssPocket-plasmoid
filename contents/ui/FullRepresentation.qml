@@ -21,7 +21,7 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 import QtQuick.Layouts 1.1
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.plasma.plasmoid 2.0
-
+import QtQuick.Controls 1.4
 
 // debug run with : QT_MESSAGE_PATTERN="[%{type}] %{appname} (%{file}:%{line}) - %{message}" plasmoidviewer -a org.communia.ttrssPocket  -s 2500x1080 -c org.kde.panel [ --qmljsdebugger=port:3966 ]
 Item {
@@ -109,6 +109,11 @@ Item {
         anchors.top:parent.top
         anchors.bottom: grip.top
         toolBar: mainStackToolBar //comment to share the same toolbuttons instead of define for every page
+    Action {
+        shortcut: "Escape"
+        onTriggered: plasmoid.expanded = false
+    }
+
     }
 
     //ArticleOxidePage {     //  UBUNTU OPTION- cannot be inside scrollview
