@@ -3,19 +3,19 @@ This plasmoid will give you a nice full-screen touch friendly qml interface to t
 
 This plasmoid was started in autumn of 2014 and upgraded in 2017. So maybe some mixing of qt modules are there (qtControls 2.0 and 1.0 sure). I 'll clean asap.
 
-###build:
+### build:
  zip -r ttrssPocket.zip /path/to/ttrssPocket
 
-###Install:
+### Install:
 plasmapkg2 -t plasmoid -i /path/to/ttrssPocket.zip
 
-###Uninstall:
+### Uninstall:
 plasmapkg2 -t plasmoid -r /path/to/ttrssPocket.zip
 
-##TODO
+## TODO
 * It's not implemented any pager or categories browsing of Pocket.
 
-##DEPENDS
+## DEPENDS
 
 It needs these qml modules:
 * QtQuick 2.0
