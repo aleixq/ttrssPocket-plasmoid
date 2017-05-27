@@ -71,6 +71,10 @@ MouseArea {
         }
     }
 
+    onClicked: {
+        swipeUp()
+    }
+
     onReleased: {
         capture = false
     }
