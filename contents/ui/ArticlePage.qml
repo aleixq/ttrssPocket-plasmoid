@@ -151,7 +151,21 @@ PlasmaComponents.Page {
                 }
             }
         }
-
+        Rectangle{
+            id: readProgress
+            anchors.top: navWrapper.bottom
+            z:1
+            height: units.gridUnit / 5
+            width: {
+                if ((articleWeb.contentHeight-webWrapper.height) < 1){
+                    // if on Yend = width to 100%
+                    return webWrapper.width
+                }
+                //else do progress bar width processing
+                return (articleWeb.contentY * webWrapper.width)/(articleWeb.contentHeight-webWrapper.height)
+            }
+            color: theme.highlightColor
+        }
         Rectangle {
             id: webWrapper
             anchors.top: navWrapper.bottom
@@ -163,6 +177,16 @@ PlasmaComponents.Page {
                 anchors.fill: parent
                 focus: true
                 experimental.preferences.navigatorQtObjectEnabled: true
+                /*onContentYChanged:{
+                    Done at readProgress width binding.
+                    Calculate the readProgress width...
+                    var docHeight = articleWeb.contentHeight
+                    var winHeight = webWrapper.height
+                    var max = docHeight -winHeight
+                    var value = contentY
+                    readProgress.width = (value * parent.width)/max
+                    readProgress.width = (contentY * parent.width)/(articleWeb.contentHeight-webWrapper.height)
+                }*/
                 experimental.onMessageReceived: {
                     console.debug(message)
                     console.log('onMessageReceived: ' + message.data)
