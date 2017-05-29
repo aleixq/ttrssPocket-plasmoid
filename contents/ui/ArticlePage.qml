@@ -97,8 +97,25 @@ PlasmaComponents.Page {
                     Layout.minimumWidth: units.gridUnit * 3
                     Layout.minimumHeight: units.gridUnit * 3
                     iconSource: "download-later"
+                    text: i18n("Add to pocket")
                     onClicked: article.toPocket(
                                    locationField.text) //requestOp(field)
+                }
+                PlasmaComponents.ToolButton {
+                    id: openExternal
+                    Layout.minimumWidth: units.gridUnit * 3
+                    Layout.minimumHeight: units.gridUnit * 3
+                    iconSource: "window-new"
+                    text: i18n("Open in browser")
+                    onClicked: {
+                        if (locationField.text == "about:blank"){
+                            // Means we open the article source link
+                            Qt.openUrlExternally(article.originalLink)
+                        } else{
+                            // Open the current page
+                            Qt.openUrlExternally(articleWeb.url)
+                        }
+                    }
                 }
                 PlasmaComponents.ToolButton {
                     id: backer
