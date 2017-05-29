@@ -302,8 +302,8 @@ PlasmaComponents.Page {
 '    text-rendering: optimizelegibility !important;'+
 '    letter-spacing: ' + (0.02 * units.devicePixelRatio)  + 'em;'+
 '    text-align:center;'+
-'    //max-width:' + (12 * units.devicePixelRatio)  + 'em !important;'+
-'    font-size: ' + (1.3 * units.devicePixelRatio)  + 'em;'+
+'    /*max-width:' + (12 * units.devicePixelRatio)  + 'em !important;*/'+
+'    font-size: ' + (1.5 * units.devicePixelRatio)  + 'em;'+
 '}'+
 ''+
 'a {'+
@@ -316,7 +316,7 @@ PlasmaComponents.Page {
 'header,article {'+
 '    margin: 0 auto;'+
 '    line-height: ' + (1.2 * units.devicePixelRatio)  + 'em;'+
-'    max-width:' + (24 * units.devicePixelRatio)  + 'em !important;'+
+'    max-width:' + (20 * units.devicePixelRatio)  + 'em !important;'+
 ''+
 '}'+
 ''+
@@ -327,11 +327,11 @@ PlasmaComponents.Page {
 '    opacity: 0.8; '+
 '    clear: both; '+
 '    line-height: ' + (1 * units.devicePixelRatio)  + 'em;'+
-'    max-width:' + (24 * units.devicePixelRatio)  + 'em !important;'+
+'    max-width:' + (20 * units.devicePixelRatio)  + 'em !important;'+
 '}'+
 ''+
 'article p, .content div {'+
-'    text-align: justify;'+
+'    text-align: left;'+
 '}'+
 ''+
 'article {'+
@@ -351,7 +351,7 @@ PlasmaComponents.Page {
 '}'+
 '' +
 '#authoring, #source {'+
-'    font-size: ' + (0.8 * units.devicePixelRatio)  + 'em;'+
+'    font-size: ' + (0.4 * units.devicePixelRatio)  + 'em;'+
 '    opacity: 0.5;'+
 '}'+
 ''+
