@@ -292,12 +292,12 @@ PlasmaComponents.Page {
             var textColor = "#eeeeee"
         }
        var styleVert = '<style>body {'+
-'    margin-top: ' + (80 * units.devicePixelRatio)  + 'px;'+
+'    margin-top: ' + (2 * units.devicePixelRatio)  + 'px;'+
 '    font-family: '+ bodyFont +', Arial, Helvetica, sans-serif;'+
 '    content: "large";'+
 '    background-color: ' + backgroundColor + ';'+
 '    color:'+ textColor + ';' +
-'    opacity: 0.9; '+
+'    opacity: 1; '+
 '    -webkit-font-smoothing: antialiased !important;'+
 '    text-rendering: optimizelegibility !important;'+
 '    letter-spacing: ' + (0.02 * units.devicePixelRatio)  + 'em;'+
@@ -315,19 +315,20 @@ PlasmaComponents.Page {
 ''+
 'header,article {'+
 '    margin: 0 auto;'+
-'    line-height: ' + (1.2 * units.devicePixelRatio)  + 'em;'+
+'    line-height: ' + (0.8 * units.devicePixelRatio)  + 'em;'+
 '    max-width:' + (20 * units.devicePixelRatio)  + 'em !important;'+
 ''+
 '}'+
 ''+
 'h1 {'+
-'    font-size: ' + (1.5 * units.devicePixelRatio)  + 'em;'+
+'    font-size: ' + (units.devicePixelRatio)  + 'em;'+
 '    text-align:center;'+
 '    font-family:' + headingFont + ';'+
-'    opacity: 0.8; '+
+'    opacity: 1; '+
 '    clear: both; '+
-'    line-height: ' + (1 * units.devicePixelRatio)  + 'em;'+
+'    line-height: ' + (0.7 * units.devicePixelRatio)  + 'em;'+
 '    max-width:' + (20 * units.devicePixelRatio)  + 'em !important;'+
+'    margin-top:' + (0.01 * units.devicePixelRatio)  + 'em;'+
 '}'+
 ''+
 'article p, .content div {'+
@@ -347,11 +348,10 @@ PlasmaComponents.Page {
 '}'+
 '    '+
 '#authoring {'+
-'    float:left;'+
 '}'+
 '' +
 '#authoring, #source {'+
-'    font-size: ' + (0.4 * units.devicePixelRatio)  + 'em;'+
+'    font-size: ' + (0.25 * units.devicePixelRatio)  + 'em;'+
 '    opacity: 0.5;'+
 '}'+
 ''+
@@ -386,19 +386,20 @@ links[i].target = "_self"; \
 <html>' + head + 
 '   <body onload="noBlanks();">\
         <header>\
-            <span id="authoring">' + article.authoring + '</span>\
-        \
+            <span id="authoring">' + article.authoring + ' | </span><a id="source" href="' + article.originalLink + '">source</a>\
         <h1>'+ 
         article.title + 
         '</h1>' +
-        '<a id="source" href="' + article.originalLink + '">source</a></header>'+
+        '' +
+        '</header>'+
         '<article>' + article.bodyContent +
-            '</article><a href="' + article.originalLink + '">source</a>\
+        '</article>' +
+        '<a href="' + article.originalLink + '">source</a>\
     </body>\
 </html>'
 
         //article.startUrl=articleWeb.url
-        //console.debug(html)
+        console.debug(html)
         articleWeb.loadHtml(html)
     }
     function setUrl() {
