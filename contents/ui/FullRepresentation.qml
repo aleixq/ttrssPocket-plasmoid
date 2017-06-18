@@ -23,7 +23,10 @@ import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.plasma.plasmoid 2.0
 import QtQuick.Controls 1.4
 
-// debug run with : QT_MESSAGE_PATTERN="[%{type}] %{appname} (%{file}:%{line}) - %{message}" plasmoidviewer -a org.communia.ttrssPocket  -s 2500x1080 -c org.kde.panel [ --qmljsdebugger=port:3966 ]
+// debug run with : QT_MESSAGE_PATTERN="[%{type}] %{appname} (%{file}:%{line}) - %{message}" plasmoidviewer -a org.communia.ttrssPocket  -s 2500x1080 -c org.kde.panel [ --qmljsdebugger=port:3966 ] 
+// To debug with not too much noise do console.warn instead of log or debug
+// Add QT_LOGGING_RULES='*=true' to debug console.log and console.debug (noisy)...
+
 Item {
     Layout.preferredWidth: plasmoid.screenGeometry.width
     Layout.preferredHeight: plasmoid.screenGeometry.height
@@ -116,7 +119,6 @@ Item {
 
     }
 
-    //ArticleOxidePage {     //  UBUNTU OPTION- cannot be inside scrollview
     ArticlePage {
         id: webLoader
         onBack: {
