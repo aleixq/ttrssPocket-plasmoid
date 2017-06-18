@@ -25,8 +25,7 @@ import QtQuick.Window 2.2
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
 
-import QtWebKit 3.0
-import QtWebKit.experimental 1.0
+import QtWebEngine 1.5
 
 PlasmaComponents.Page {
 
@@ -189,11 +188,12 @@ PlasmaComponents.Page {
             anchors.bottom: parent.bottom
             width: parent.width
             color: "transparent"
-            WebView {
+            WebEngineView {
                 id: articleWeb
                 anchors.fill: parent
                 focus: true
-                experimental.preferences.navigatorQtObjectEnabled: true
+                zoomFactor: units.devicePixelRatio
+                //experimental.preferences.navigatorQtObjectEnabled: true
                 /*onContentYChanged:{
                     Done at readProgress width binding.
                     Calculate the readProgress width...
@@ -204,7 +204,8 @@ PlasmaComponents.Page {
                     readProgress.width = (value * parent.width)/max
                     readProgress.width = (contentY * parent.width)/(articleWeb.contentHeight-webWrapper.height)
                 }*/
-                experimental.onMessageReceived: {
+               /*TODO IMPLEMENT WEBCHANNEL bits
+               experimental.onMessageReceived: {
                     console.debug(message)
                     console.log('onMessageReceived: ' + message.data)
                     var data = null
@@ -236,21 +237,22 @@ PlasmaComponents.Page {
                         break
                     }
                     }
-                }
+                }*/
                 onNavigationRequested: {
                     // detect URL scheme prefix, most likely an external link
                     console.log("print request" + request.url + "\n navtype:"
                                 + request.navigationType)
                     var schemaRE = /^\w+:/
                     if (schemaRE.test(request.url)) {
-                        request.action = WebView.AcceptRequest
+                        request.action = WebEngineView.AcceptRequest
                     } else {
-                        request.action = WebView.IgnoreRequest
+                        request.action = WebEngineView.IgnoreRequest
                         // delegate request.url here
                     }
                 }
                 onUrlChanged: {
                     locationField.text = url
+                    articleWeb.zoomFactor = units.devicePixelRatio
                     if (url == article.startUrl && url == "about:blank") {
                         console.log("We are on Start url, Reloading...")
                         article.updateContent()
@@ -291,8 +293,10 @@ PlasmaComponents.Page {
             var backgroundColor = "#333333"
             var textColor = "#eeeeee"
         }
-       var styleVert = '<style>body {'+
-'    margin-top: ' + (2 * units.devicePixelRatio)  + 'px;'+
+        // Correction to abstract dpi accomodation strategy as webengine accepts zoomFactor
+        var dpi_correction_factor = (articleWeb.zoomFactor > 1)? 1 : units.devicePixelRatio
+        var styleVert = '<style>body {'+
+'    margin-top: 2px;'+
 '    font-family: '+ bodyFont +', Arial, Helvetica, sans-serif;'+
 '    content: "large";'+
 '    background-color: ' + backgroundColor + ';'+
@@ -300,10 +304,10 @@ PlasmaComponents.Page {
 '    opacity: 1; '+
 '    -webkit-font-smoothing: antialiased !important;'+
 '    text-rendering: optimizelegibility !important;'+
-'    letter-spacing: ' + (0.02 * units.devicePixelRatio)  + 'em;'+
+'    letter-spacing: 0.04em;'+
 '    text-align:center;'+
-'    /*max-width:' + (12 * units.devicePixelRatio)  + 'em !important;*/'+
-'    font-size: ' + (1.5 * units.devicePixelRatio)  + 'em;'+
+'    /*max-width:' + (12 * dpi_correction_factor)  + 'em !important;*/'+
+'    font-size: ' + (1.5 * dpi_correction_factor)  + 'em;'+
 '}'+
 ''+
 'a {'+
@@ -315,20 +319,20 @@ PlasmaComponents.Page {
 ''+
 'header,article {'+
 '    margin: 0 auto;'+
-'    line-height: ' + (0.8 * units.devicePixelRatio)  + 'em;'+
-'    max-width:' + (20 * units.devicePixelRatio)  + 'em !important;'+
+'    line-height: 1.6em;'+
+'    max-width: 40em !important;'+
 ''+
 '}'+
 ''+
 'h1 {'+
-'    font-size: ' + (units.devicePixelRatio)  + 'em;'+
+'    font-size: 2em;'+
 '    text-align:center;'+
 '    font-family:' + headingFont + ';'+
 '    opacity: 1; '+
 '    clear: both; '+
-'    line-height: ' + (0.7 * units.devicePixelRatio)  + 'em;'+
-'    max-width:' + (20 * units.devicePixelRatio)  + 'em !important;'+
-'    margin-top:' + (0.01 * units.devicePixelRatio)  + 'em;'+
+'    line-height: 1.4em;'+
+'    max-width: 40em !important;'+
+'    margin-top:0.02em;'+
 '}'+
 ''+
 'article p, .content div {'+
@@ -341,7 +345,7 @@ PlasmaComponents.Page {
 '}'+
 ''+
 'img {'+
-'    margin: ' + (20 * units.devicePixelRatio)  + 'px;'+
+'    margin: ' + (20 * dpi_correction_factor)  + 'px;'+
 '    display:block;'+
 '    text-align: center;'+
 '    margin: auto auto;max-width:100%;'+  
@@ -351,7 +355,7 @@ PlasmaComponents.Page {
 '}'+
 '' +
 '#authoring, #source {'+
-'    font-size: ' + (0.25 * units.devicePixelRatio)  + 'em;'+
+'    font-size: ' + (0.45 * dpi_correction_factor)  + 'em;'+
 '    opacity: 0.5;'+
 '}'+
 ''+
@@ -399,13 +403,14 @@ links[i].target = "_self"; \
 </html>'
 
         //article.startUrl=articleWeb.url
-        console.debug(html)
+        //console.warn(html)
         articleWeb.loadHtml(html)
     }
     function setUrl() {
         //Set url from originalLink and set start url as original link
         articleWeb.url = article.originalLink
         pinStartUrl()
+        articleWeb.zoomFactor = units.devicePixelRatio
     }
     function pinStartUrl() {
         //Set currenturl as startUrl

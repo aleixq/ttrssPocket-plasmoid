@@ -21,8 +21,8 @@ import QtQuick 2.0
 import QtQuick.Controls 1.4 as QtControls
 import QtQuick.Layouts 1.1
 
-import QtWebKit 3.0
-import QtWebKit.experimental 1.0
+import QtWebEngine 1.0
+
 
 
 //FIXME this causes a crash in Oxygen style
@@ -102,11 +102,12 @@ Item {
         anchors.right: pocketManager.right
         clip: true
 
-        WebView {
+        WebEngineView {
             id: webview
             visible: false
             url: "https://getpocket.com"
-            experimental.preferences.privateBrowsingEnabled: true
+            zoomFactor: units.devicePixelRatio
+            //experimental.preferences.privateBrowsingEnabled: true
             onLoadingChanged: {
                 console.log("webview " + loading)
                 if (loading) {
