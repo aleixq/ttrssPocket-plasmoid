@@ -139,6 +139,7 @@ Item {
         PocketManager {
             id: pocketManager
             onClaimPage: mainStack.push(pocketConfig)
+            onClose: mainStack.pop()
             onAuthenticated: mainStack.pop()
             onNewData: pocket.appendData(someData)
         }

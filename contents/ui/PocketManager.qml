@@ -20,6 +20,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4 as QtControls
 import QtQuick.Layouts 1.1
+import org.kde.plasma.components 2.0 as PlasmaComponents
 
 import QtWebEngine 1.5
 
@@ -41,6 +42,7 @@ Item {
     signal getReady(variant Items)
     signal newData(variant someData)
     signal claimPage
+    signal close
 
     function needConfig() {
         if (plasmoid.configuration.pocketAccessToken === "") {
@@ -93,28 +95,43 @@ Item {
                 width: units.gridUnit * 5
                 font.pointSize: 20
             }
+            PlasmaComponents.ToolButton {
+                id: configClose
+                iconSource: "tab-close"
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        //Emit back signal
+                        pocketManager.close()
+                    }
+                }
+            }
         }
     }
-    QtControls.ScrollView {
-        anchors.bottom: parent.bottom
-        anchors.top: fields.bottom
-        anchors.left: pocketManager.left
-        anchors.right: pocketManager.right
-        clip: true
+
 
         WebEngineView {
             id: webview
             visible: false
             url: "https://getpocket.com"
+            anchors.bottom: parent.bottom
+            anchors.top: fields.bottom
+            anchors.left: pocketManager.left
+            anchors.right: pocketManager.right
             zoomFactor: units.devicePixelRatio
             //experimental.preferences.privateBrowsingEnabled: true
+            profile: WebEngineProfile {
+                offTheRecord : true
+            }
             onLoadingChanged: {
-                console.log("webview " + loading)
+                console.log("webview loading: " + loading)
                 if (loading) {
                     pocketManager.countLoading++
                 } else {
                     pocketManager.countLoading--
                     var str = loadRequest.url.toString()
+                    console.log(str)
+                    console.log("^request")
                     var i = str.indexOf("linksbag:authorizationFinished", 0)
                     if (!i) {
                         pocketManager.requestAccessToken()
@@ -130,7 +147,6 @@ Item {
                 //running: true;
             }
         }
-    }
 
     onAccessTokenChanged: {
         if (accessToken === undefined || accessToken === "")
